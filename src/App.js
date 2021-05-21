@@ -45,7 +45,7 @@ const  App =()=> {
       <input
       type="text"
       className="search"
-      placeholder="Search City/Province/Country..."
+      placeholder="Search City/State/Country..."
       value={query}
       onChange={(e)=> setQuery(e.target.value)}
       onKeyPress={search}
