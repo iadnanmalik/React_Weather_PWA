@@ -7,6 +7,7 @@ const  App =()=> {
   const [query,setQuery]= useState("");
   const [weather, setWeather]= useState("")
   const [time, setTime]= useState("")
+  const [error, setError]= useState(null)
   const convertTime=(dt)=>{
     let unix_timestamp = dt
     // Create a new JavaScript Date object based on the timestamp
@@ -28,19 +29,33 @@ const  App =()=> {
   const search = async (e) =>{
     if (e.key=== 'Enter'){
       console.log(query)
-      const data= await fetchWeather(query);
-      setWeather(data);
-      console.log(convertTime(data.dt));
-      setTime(convertTime(data.dt))
-      setQuery("");
-
-      console.log(data);
+      try {
+        const data= await fetchWeather(query);
+        setWeather(data);
+        console.log(convertTime(data.dt));
+        setTime(convertTime(data.dt))
+        setQuery("");
+        //setError(null);
+        console.log(data); 
+      } catch (error) {
+      
+        setError("Please Enter Correct Location")
+        setWeather("")
+        setTimeout(() => {
+          setError("");
+        }, 3000);
+      
+      }
+      
     }
   }
   
 
   return (
     <div className="main-container">
+      {
+        error && <div className="search" style={{color:'red'}}>{error}</div>
+      }
      <strong className="search"> Weather Search</strong>
       <input
       type="text"
